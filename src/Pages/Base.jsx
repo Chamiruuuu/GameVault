@@ -34,7 +34,7 @@ const Base = ({ handleClick, handleGenre, description }) => {
         <Header searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
         {loading ? (
           <h1 className="font-sans font-bold text-white text-2xl text-center lg:text-left lg:text-4xl" id="loading">
-            Chill lang loading pa....
+            Loading.....
           </h1>
         ) : (
           <>
