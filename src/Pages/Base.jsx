@@ -12,29 +12,25 @@ const Base = ({ handleClick, handleGenre, description }) => {
     game.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-
-  const addToFav = (id) =>{
+  const addToFav = (id) => {
     const existingGame = favGames.find((game) => game.id === id);
 
-    if(existingGame){
+    if (existingGame) {
       return;
-    }else{
+    } else {
       const newGame = data.find((game) => game.id === id);
       setFavGames((prevGames) => [...prevGames, newGame]);
     }
-     
   }
 
   return (
     <div className="min-h-screen flex">
-      {/* Side Navigation */}
       <SideNav handleClick={handleClick} handleGenre={handleGenre} searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
-      {/* Main Content */}
       <div className="flex-grow">
         <Header searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
         {loading ? (
           <h1 className="font-sans font-bold text-white text-2xl text-center lg:text-left lg:text-4xl" id="loading">
-            Chill lang loading pa.......
+            Chill lang loading pa....
           </h1>
         ) : (
           <>
@@ -47,7 +43,7 @@ const Base = ({ handleClick, handleGenre, description }) => {
                 {filtered?.map((game) => (
                   <div
                     key={game.id}
-                    className="rounded-lg shadow-lg overflow-hidden bg-transparent hover:transition-all duration-300 border border-gray-800 hover:scale-105 "
+                    className="rounded-lg shadow-lg overflow-hidden bg-transparent hover:transition-all duration-300 border border-gray-800 hover:scale-105"
                   >
                     <div className="relative h-52 overflow-hidden group">
                       <img
@@ -55,18 +51,22 @@ const Base = ({ handleClick, handleGenre, description }) => {
                         alt={game.name}
                         className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                       />
-                      <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-gray-900 to-transparent p-3">
-                        <div className="flex flex-wrap gap-2">
+                      {/* Platforms overlay */}
+                      <div className="absolute top-0 left-0 bottom-0 bg-gradient-to-r from-gray-900/90 to-transparent p-2">
+                        <div className="flex flex-col gap-2">
                           {game.platforms?.map((platform) => (
                             <span
                               key={platform.platform.id}
-                              className="bg-gray-800/90 text-gray-300 text-xs px-2.5 py-1 rounded-full border border-gray-600"
+                              className="bg-gray-800/90 text-gray-300 text-xs px-1.5 py-1 rounded border border-gray-700"
+                              title={platform.platform.name}
                             >
-                              {platform.platform.name}
+                              {platform.platform.name.slice(0, 3)}
                             </span>
                           ))}
                         </div>
                       </div>
+                      {/* Bottom gradient */}
+                      <div className="absolute bottom-0 left-0 right-0 h-1/2 bg-gradient-to-t from-gray-900 to-transparent" />
                     </div>
                     <div className="p-4 space-y-4">
                       <h2 className="text-xl font-bold text-gray-100 line-clamp-1 hover:line-clamp-none">
@@ -81,7 +81,10 @@ const Base = ({ handleClick, handleGenre, description }) => {
                             {game.released?.split("-")[0] || "Unknown"}
                           </span>
                         </div>
-                        <button onClick={()=> addToFav(game.id)}className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 hover:shadow-lg">
+                        <button
+                          onClick={() => addToFav(game.id)}
+                          className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 hover:shadow-lg"
+                        >
                           Add To Favorite
                         </button>
                       </div>
